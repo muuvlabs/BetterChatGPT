@@ -19,7 +19,12 @@ function App() {
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const handleSignInWithGoogle = () => window.location.href = `/login`;
+  const handleSignInWithGoogle = () => {
+    const url = new URL(import.meta.env.VITE_DEFAULT_API_ENDPOINT);
+    url.pathname = '/api/login';
+    window.location.href = url.toString();
+  }
+  
 
   useEffect(() => {
     document.documentElement.lang = i18n.language;
@@ -31,7 +36,7 @@ function App() {
   useEffect(() => {
     const checkLoggedInStatus = async () => {
       const apiEndpoint = new URL(import.meta.env.VITE_DEFAULT_API_ENDPOINT);
-      apiEndpoint.pathname = '/me';
+      apiEndpoint.pathname = '/api/me';
       const response = await fetch(apiEndpoint.toString(), { method: 'GET', credentials: 'include' });
       const isValidResponse = response.status === 200 
       setIsLoggedIn( isValidResponse );

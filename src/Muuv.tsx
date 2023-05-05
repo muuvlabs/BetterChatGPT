@@ -30,15 +30,10 @@ function App() {
 
   useEffect(() => {
     const checkLoggedInStatus = async () => {
-      const apiEndpoint = import.meta.env.VITE_DEFAULT_API_ENDPOINT;
-      const endpointUrl = new URL(apiEndpoint);
-      endpointUrl.pathname = '/me';
-      const response = await fetch(endpointUrl.toString(), {
-        method: 'GET',
-        credentials: 'include',
-      });
+      const apiEndpoint = new URL(import.meta.env.VITE_DEFAULT_API_ENDPOINT);
+      apiEndpoint.pathname = '/me';
+      const response = await fetch(apiEndpoint.toString(), { method: 'GET', credentials: 'include' });
       const isValidResponse = response.status === 200 
-
       setIsLoggedIn( isValidResponse );
     };
     checkLoggedInStatus();

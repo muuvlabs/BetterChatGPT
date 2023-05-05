@@ -6,6 +6,7 @@ export const validateApiKey = async (apiKey: string) => {
   try {
     const response = await fetch(endpoint, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${apiKey}`,
@@ -28,6 +29,7 @@ export const getChatCompletion = async (
 ) => {
   const response = await fetch(endpoint, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,
@@ -50,6 +52,7 @@ export const getChatCompletionStream = async (
 ) => {
   const response = await fetch(endpoint, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,

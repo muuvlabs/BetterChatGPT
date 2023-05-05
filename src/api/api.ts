@@ -19,6 +19,7 @@ export const getChatCompletion = async (
   const response = await fetch(endpoint, {
     method: 'POST',
     headers,
+    credentials: 'include',
     body: JSON.stringify({
       messages,
       ...config,
@@ -48,6 +49,7 @@ export const getChatCompletionStream = async (
   const response = await fetch(endpoint, {
     method: 'POST',
     headers,
+    credentials: 'include',
     body: JSON.stringify({
       messages,
       ...config,
@@ -86,6 +88,7 @@ export const getChatCompletionStream = async (
 };
 
 export const submitShareGPT = async (body: ShareGPTSubmitBodyInterface) => {
+  throw new Error( "Feature disabled" );
   const request = await fetch('https://sharegpt.com/api/conversations', {
     body: JSON.stringify(body),
     headers: {

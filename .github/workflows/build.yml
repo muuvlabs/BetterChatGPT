@@ -1,0 +1,25 @@
+name: 🤖🏭 Build
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🏗 Checkout branch
+        uses: actions/checkout@v3
+      - name: 📦 Install Packages
+        run: yarn install --frozen-lockfile
+        env:
+          CI: '' # suppress treating warnings as errors for now
+      - name: 🩻 Test
+        run: echo "🧪 No Tests set" #yarn test
+      - name: 🏭 Build Project
+        run: yarn build

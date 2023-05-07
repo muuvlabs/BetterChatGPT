@@ -1,0 +1,39 @@
+name: 👆♨️ Dispatch hotfix branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  dispatch-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Check out main branch
+        uses: actions/checkout@v3
+        with:
+          ref: main
+      - name: 🔧 Configure git
+        run: |
+          git config --global user.email "devops+bot2023@muuvlabs.com"
+          git config --global user.name "🤖 workflows[bot]2023"
+      - name: ♨️ Bump version
+        id: bump
+        run: |
+          npm version patch -m "♨️ %s"
+          VERSION=$(node -p "require('./package.json').version")
+          echo "::set-output name=HOTFIX::hotfix/$VERSION"
+      - name: ♨️ Create hotfix branch
+        run: |
+          HOTFIX=${{ steps.bump.outputs.HOTFIX }}
+          git checkout -b $HOTFIX
+          git push -u origin $HOTFIX
+      - name: 🧐 Submit pull request
+        id: pr
+        uses: repo-sync/pull-request@1b6c62644f972d1a4cf98835ed1efe728d7497a8
+        with:
+          source_branch: ${{ steps.bump.outputs.HOTFIX }}
+          destination_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: 'hotfix'
+          pr_title: ' 🔖 ${{ steps.bump.outputs.HOTFIX }} ️♨️'
+          pr_template: '.github/PULL_REQUEST_TEMPLATE.md'
+          pr_draft: true # Creates pull request as draft

@@ -10,6 +10,7 @@ import { ChatInterface } from '@type/chat';
 import { Theme } from '@type/theme';
 import ApiPopup from '@components/ApiPopup';
 import Toast from '@components/Toast';
+import Login from '@components/Login/Login';
 
 function App() {
   const initialiseNewChat = useInitialiseNewChat();
@@ -17,14 +18,8 @@ function App() {
   const setTheme = useStore((state) => state.setTheme);
   const setApiKey = useStore((state) => state.setApiKey);
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const handleSignInWithGoogle = () => {
-    const url = new URL(import.meta.env.VITE_DEFAULT_API_ENDPOINT);
-    url.pathname = '/api/login';
-    window.location.href = url.toString();
-  }
-  
+  const defaultApi = new URL(import.meta.env.VITE_DEFAULT_API)
 
   useEffect(() => {
     document.documentElement.lang = i18n.language;
@@ -34,15 +29,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const checkLoggedInStatus = async () => {
-      const apiEndpoint = new URL(import.meta.env.VITE_DEFAULT_API_ENDPOINT);
-      apiEndpoint.pathname = '/api/me';
-      const response = await fetch(apiEndpoint.toString(), { method: 'GET', credentials: 'include' });
-      const isValidResponse = response.status === 200 
-      setIsLoggedIn( isValidResponse );
-    };
-    checkLoggedInStatus();
-
     // legacy local storage
     const oldChats = localStorage.getItem('chats');
     const apiKey = localStorage.getItem('apiKey');
@@ -89,23 +75,32 @@ function App() {
         setCurrentChatIndex(0);
       }
     }
+    const checkLoggedInStatus = async () => {
+      const apiEndpoint = new URL(import.meta.env.VITE_DEFAULT_API_ENDPOINT);
+      apiEndpoint.pathname = apiEndpoint.hostname.startsWith('api.')
+        ? '/me'
+        : '/api/me'
 
+      const response = await fetch(apiEndpoint.toString(), { method: 'GET', credentials: 'include' });
+      const isValidResponse = response.status === 200 
+      setIsLoggedIn(isValidResponse);
+    };
+    checkLoggedInStatus();
   }, []);
 
-  function Login(){
-    return (
-      <div className='flex items-center justify-center h-screen'>
-        <button
-          onClick={handleSignInWithGoogle}
-          className='bg-blue-500 text-white px-4 py-2 rounded'
-        >
-          Sign-In with Google
-        </button>
-      </div>
-    );
+  return (
+    <div className='overflow-hidden w-full h-full relative'>
+      <UsersOnly /> 
+    </div>
+  );
+
+  function UsersOnly(){
+    return isLoggedIn 
+      ? <ChatGPT /> 
+      : <Login />
   }
 
-  function GPT(){
+  function ChatGPT(){
     return <>
       <Menu />
       <Chat />
@@ -113,12 +108,6 @@ function App() {
       <Toast />
     </>
   }
-  
-  return (
-    <div className='overflow-hidden w-full h-full relative'>
-      {!isLoggedIn ? <Login /> : <GPT />}
-    </div>
-  );
 }
 
 export default App;

@@ -10,6 +10,8 @@ import SettingsMenu from '@components/SettingsMenu';
 import CollapseOptions from './CollapseOptions';
 import GoogleSync from '@components/GoogleSync';
 import { TotalTokenCostDisplay } from '@components/SettingsMenu/TotalTokenCost';
+import Account from './Account';
+import Logout from './Logout';
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || undefined;
 
@@ -26,12 +28,17 @@ const MenuOptions = () => {
       >
         {countTotalTokens && <TotalTokenCostDisplay />}
         {googleClientId && <GoogleSync clientId={googleClientId} />}
-        <AboutMenu />
-        <ClearConversation />
-        <ImportExportChat />
         <Api />
         <SettingsMenu />
+        <hr/>
+        <AboutMenu />
         <Me />
+        <hr/>
+        <ClearConversation />
+        <ImportExportChat />
+        <hr/>
+        {/* <Account /> */}
+        <Logout />
       </div>
     </>
   );

@@ -37,7 +37,7 @@ const CommandPrompt = ({
         className='btn btn-neutral btn-small'
         onClick={() => setDropDown(!dropDown)}
       >
-        /
+        🤖
       </button>
       <div
         className={`${

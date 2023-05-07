@@ -34,6 +34,7 @@
   "resetCost": "Reiniciar costos",
   "countTotalTokens": "Contar tokens totales",
   "morePrompts": "Puedes encontrar más prompts aquí: ",
+  "clearPrompts": "Prompts claras",
   "postOnShareGPT": {
     "title": "Publicar en ShareGPT",
     "warning": "Por favor, tenga en cuenta que al publicar su conversación en ShareGPT, esta será accesible y visible para cualquiera. Una vez publicada, la conversación no se podrá ocultar ni eliminar, y puede ser archivada o compartida por otros. Le aconsejamos que lo considere detenidamente y evite compartir información sensible o privada en esta plataforma."
@@ -42,5 +43,5 @@
   "cloneChat": "Clone Chat",
   "cloned": "Cloned",
   "enterToSubmit": "Enter to submit",
-  "submitPlaceholder": "Escribe un mensaje o haz clic en [/] para prompt..."
+  "submitPlaceholder": "Escribe un mensaje o haz clic en [🤖] para prompt..."
 }

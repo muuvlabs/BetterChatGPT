@@ -1,0 +1,40 @@
+name: 🤖🔖 Cut Tag, 📣 Announce Release
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🏗 Checkout main branch
+        uses: actions/checkout@v3
+      - name: 🔧 Configure git
+        run: |
+          git config --global user.email "devops+bot2022@muuvlabs.com"
+          git config --global user.name "🤖 workflows[bot]2022"
+      - name: 🔖 Tag
+        run: |
+          git tag v$(node -p "require('./package.json').version")
+          git push --tags
+
+  announce-release:
+    needs: tag
+    uses: ./.github/workflows/announce-release.yml
+    secrets: inherit
+
+  # Depricated: Updated to trigger on successful published release above
+  # publish:
+  #   needs: announce-release
+  #   uses: ./.github/workflows/publish.yml
+  #   secrets: inherit
+
+  # deploy:
+  #   needs: announce-release
+  #   uses: ./.github/workflows/deploy-prod.yml
+  #   secrets: inherit

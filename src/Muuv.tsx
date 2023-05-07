@@ -77,7 +77,10 @@ function App() {
     }
     const checkLoggedInStatus = async () => {
       const apiEndpoint = new URL(import.meta.env.VITE_DEFAULT_API_ENDPOINT);
-      apiEndpoint.pathname = '/me';
+      apiEndpoint.pathname = apiEndpoint.hostname.startsWith('api.')
+        ? '/me'
+        : '/api/me'
+
       const response = await fetch(apiEndpoint.toString(), { method: 'GET', credentials: 'include' });
       const isValidResponse = response.status === 200 
       setIsLoggedIn(isValidResponse);

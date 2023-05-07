@@ -1,14 +1,16 @@
 import { useState } from 'react';
 
 const Login = () => {
-  const defaultApi = new URL(import.meta.env.VITE_DEFAULT_API)
+  const defaultApi = new URL(import.meta.env.VITE_DEFAULT_API_ENDPOINT)
   const welcomeMessage = import.meta.env.VITE_DEFAULT_WELCOME_MESSAGE
   const loginMessage = import.meta.env.VITE_DEFAULT_LOGIN_MESSAGE
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOnClick = () => {
     setIsLoading(true);
-    defaultApi.pathname = '/login';
+    defaultApi.pathname = defaultApi.hostname.startsWith('api.')
+      ? '/login'
+      : '/api/login'
     window.location.href = defaultApi.toString();
   };
 

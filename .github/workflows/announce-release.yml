@@ -1,0 +1,42 @@
+name: 🤖📣 Announce Release
+
+on:
+  workflow_call:
+  push:
+    tags:
+      - 'v*.*.*' # Trigger the workflow on tags starting with 'v' (e.g. v1.0.0)
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: 🔖 Get version
+        id: version
+        run: |
+          git checkout main
+          VERSION=$(node -p "require('./package.json').version")
+          echo "::set-output name=VERSION::$VERSION"
+      - name: 📑 Get latest two tags
+        id: latest_tags
+        run: |
+          git fetch --tags --prune --unshallow
+          git fetch --tags --prune
+          tags=($(git tag --sort=-creatordate))
+          echo "::set-output name=latest_tag::v${{ steps.version.outputs.VERSION }}"
+          echo "::set-output name=previous_tag::${tags[1]}"
+      - name: 📜 Get commit history
+        id: commit_history
+        run: |
+          previous_tag=$(echo ${{ steps.latest_tags.outputs.previous_tag }})
+          latest_tag=$(echo ${{ steps.latest_tags.outputs.latest_tag }})
+          git log --pretty=format:"%s (%h)" ${previous_tag}..${latest_tag} > commit_history.txt
+      - name: 📣 Create GitHub release
+        uses: ncipollo/release-action@a2e71bdd4e7dab70ca26a852f29600c98b33153e
+        with:
+          tag: $(echo ${{ steps.latest_tags.outputs.latest_tag }})
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            New release 🔖 $(echo ${{ steps.latest_tags.outputs.latest_tag }}) is now available!
+            Changes:
+            $(cat commit_history.txt)

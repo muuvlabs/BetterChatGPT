@@ -31,13 +31,13 @@ const MenuOptions = () => {
         <Api />
         <SettingsMenu />
         <hr/>
-        <AboutMenu />
-        <Me />
-        <hr/>
         <ClearConversation />
         <ImportExportChat />
         <hr/>
         {/* <Account /> */}
+        <Me />
+        <AboutMenu />
+        <hr/>
         <Logout />
       </div>
     </>

@@ -4,8 +4,8 @@ on:
   workflow_call:
   push:
     tags:
-      - 'v*.*.*' # Trigger the workflow on tags starting with 'v' (e.g. v1.0.0)
-      - 'v*.*.*-*' # Trigger the workflow on pre-release tags (e.g. v1.0.0-alpha)
+      - 'v*.*.*'  # Trigger the workflow on tags starting with 'v' (e.g. v1.0.0)
+      - 'v*.*.*-*'  # Trigger the workflow on pre-release tags (e.g. v1.0.0-alpha)
 
 jobs:
   release:
@@ -32,6 +32,7 @@ jobs:
           previous_tag=${{ steps.latest_tags.outputs.previous_tag }}
           latest_tag=${{ steps.latest_tags.outputs.latest_tag }}
           git log --pretty=format:"%s (%h)" ${previous_tag}..${latest_tag} > commit_history.txt
+          echo "::set-output name=release_changes::$(cat commit_history.txt)"
       - name: 📣 Create GitHub release
         uses: ncipollo/release-action@a2e71bdd4e7dab70ca26a852f29600c98b33153e
         with:
@@ -41,4 +42,4 @@ jobs:
           body: |
             New release 🔖 ${{ steps.latest_tags.outputs.latest_tag }} is now available!
             Changes:
-            $(cat commit_history.txt)
+            ${{ steps.commit_history.outputs.release_changes }}

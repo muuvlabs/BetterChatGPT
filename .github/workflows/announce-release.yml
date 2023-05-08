@@ -5,12 +5,13 @@ on:
   push:
     tags:
       - 'v*.*.*' # Trigger the workflow on tags starting with 'v' (e.g. v1.0.0)
+      - 'v*.*.*-*' # Trigger the workflow on pre-release tags (e.g. v1.0.0-alpha)
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: 🔖 Get version
         id: version
         run: |
@@ -36,6 +37,7 @@ jobs:
         with:
           tag: $(echo ${{ steps.latest_tags.outputs.latest_tag }})
           token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: ${{ contains(steps.latest_tags.outputs.latest_tag, '-') }}
           body: |
             New release 🔖 $(echo ${{ steps.latest_tags.outputs.latest_tag }}) is now available!
             Changes:

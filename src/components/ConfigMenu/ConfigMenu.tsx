@@ -139,7 +139,7 @@ export const MaxTokenSlider = ({
   return (
     <div>
       <label className='block text-sm font-medium text-gray-900 dark:text-white'>
-        {t('token.label')}: {_maxToken}
+      🎫  {t('token.label')}: {_maxToken}
       </label>
       <input
         type='range'
@@ -172,7 +172,7 @@ export const TemperatureSlider = ({
   return (
     <div className='mt-5 pt-5 border-t border-gray-500'>
       <label className='block text-sm font-medium text-gray-900 dark:text-white'>
-        {t('temperature.label')}: {_temperature}
+      ️🤡 {t('temperature.label')}: {_temperature}
       </label>
       <input
         id='default-range'
@@ -205,7 +205,7 @@ export const TopPSlider = ({
   return (
     <div className='mt-5 pt-5 border-t border-gray-500'>
       <label className='block text-sm font-medium text-gray-900 dark:text-white'>
-        {t('topP.label')}: {_topP}
+      🎲  {t('topP.label')}: {_topP}
       </label>
       <input
         id='default-range'
@@ -238,7 +238,7 @@ export const PresencePenaltySlider = ({
   return (
     <div className='mt-5 pt-5 border-t border-gray-500'>
       <label className='block text-sm font-medium text-gray-900 dark:text-white'>
-        {t('presencePenalty.label')}: {_presencePenalty}
+       💡 {t('presencePenalty.label')}: {_presencePenalty}
       </label>
       <input
         id='default-range'
@@ -253,7 +253,7 @@ export const PresencePenaltySlider = ({
         className='w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer'
       />
       <div className='min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2'>
-        {t('presencePenalty.description')}
+       {t('presencePenalty.description')}
       </div>
     </div>
   );
@@ -271,7 +271,7 @@ export const FrequencyPenaltySlider = ({
   return (
     <div className='mt-5 pt-5 border-t border-gray-500'>
       <label className='block text-sm font-medium text-gray-900 dark:text-white'>
-        {t('frequencyPenalty.label')}: {_frequencyPenalty}
+        🧠 {t('frequencyPenalty.label')}: {_frequencyPenalty}
       </label>
       <input
         id='default-range'

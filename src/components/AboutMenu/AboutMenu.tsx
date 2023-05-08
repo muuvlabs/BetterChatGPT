@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import PopupModal from '@components/PopupModal';
 import AboutIcon from '@icon/AboutIcon';
+import { version } from '../../../package.json'
 
 const AboutMenu = () => {
   const { t } = useTranslation(['main', 'about']);
@@ -19,6 +20,9 @@ const AboutMenu = () => {
           <AboutIcon />
         </div>
         {t('about')}
+        <small className='text-xxs'>
+          🔖 v{version}
+        </small>
       </a>
       {isModalOpen && (
         <PopupModal

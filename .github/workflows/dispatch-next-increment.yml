@@ -21,7 +21,7 @@ jobs:
       - name: 🔖 Bump version
         id: bump
         run: |
-          npm version prepatch -m "♨️ %s"
+          npm version prerelease -m "♨️ %s"
           VERSION=$(node -p "require('./package.json').version")
           echo "::set-output name=RELEASE::release/$VERSION"
       - name: 📦 Create release branch

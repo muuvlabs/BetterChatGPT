@@ -29,16 +29,16 @@ jobs:
       - name: 📜 Get commit history
         id: commit_history
         run: |
-          previous_tag=$(echo ${{ steps.latest_tags.outputs.previous_tag }})
-          latest_tag=$(echo ${{ steps.latest_tags.outputs.latest_tag }})
+          previous_tag=${{ steps.latest_tags.outputs.previous_tag }}
+          latest_tag=${{ steps.latest_tags.outputs.latest_tag }}
           git log --pretty=format:"%s (%h)" ${previous_tag}..${latest_tag} > commit_history.txt
       - name: 📣 Create GitHub release
         uses: ncipollo/release-action@a2e71bdd4e7dab70ca26a852f29600c98b33153e
         with:
-          tag: $(echo ${{ steps.latest_tags.outputs.latest_tag }})
+          tag: ${{ steps.latest_tags.outputs.latest_tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: ${{ contains(steps.latest_tags.outputs.latest_tag, '-') }}
           body: |
-            New release 🔖 $(echo ${{ steps.latest_tags.outputs.latest_tag }}) is now available!
+            New release 🔖 ${{ steps.latest_tags.outputs.latest_tag }} is now available!
             Changes:
             $(cat commit_history.txt)

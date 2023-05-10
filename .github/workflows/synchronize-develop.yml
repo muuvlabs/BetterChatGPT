@@ -12,8 +12,8 @@ jobs:
       - name: 🤖⏩ Synchronize Develop Branch
         uses: knerd/sync-dev-action@v1
         with:
-          MAIN: main 
-          DEVELOP: develop 
+          # MAIN: main
+          # DEVELOP: develop 
           BOT_NAME: 🤖 workflows[bot]2023
           BOT_EMAIL: devops+bot2023@muuvlabs.com
           TOKEN: ${{ secrets.GITHUB_TOKEN }}

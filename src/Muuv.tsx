@@ -18,8 +18,8 @@ function App() {
   const setTheme = useStore((state) => state.setTheme);
   const setApiKey = useStore((state) => state.setApiKey);
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const defaultApi = new URL(import.meta.env.VITE_DEFAULT_API)
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const defaultApi = new URL(import.meta.env.VITE_DEFAULT_API)
 
   useEffect(() => {
     document.documentElement.lang = i18n.language;

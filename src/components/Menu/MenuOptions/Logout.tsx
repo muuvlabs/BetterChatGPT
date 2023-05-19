@@ -6,7 +6,7 @@ const Logout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const handleOnClick = () => {
     setIsLoading(true);
-    defaultApi.pathname = defaultApi.hostname.startsWith('api.')
+    defaultApi.pathname = ( defaultApi.hostname.startsWith('api.') || defaultApi.hostname.match(/localhost/) )
       ? '/logout'
       : '/api/logout'
     window.location.href = defaultApi.toString();

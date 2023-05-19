@@ -76,7 +76,7 @@ function App() {
     }
     const checkLoggedInStatus = async () => {
       const apiEndpoint = new URL(import.meta.env.VITE_DEFAULT_API_ENDPOINT);
-      apiEndpoint.pathname = apiEndpoint.hostname.startsWith('api.')
+      apiEndpoint.pathname = ( apiEndpoint.hostname.startsWith('api.') || apiEndpoint.hostname.match(/localhost/) )
         ? '/me'
         : '/api/me'
 

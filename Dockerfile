@@ -1,5 +1,7 @@
 FROM node:alpine
 
+ARG NODE_ENV=development
+
 RUN addgroup -S appgroup && \
   adduser -S appuser -G appgroup && \
   mkdir -p /home/appuser/app && \

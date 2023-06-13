@@ -1,7 +1,7 @@
 {
   "name": "better-chatgpt",
   "private": true,
-  "version": "1.0.4-8",
+  "version": "1.0.4-9",
   "type": "module",
   "homepage": "./",
   "main": "electron/index.cjs",
@@ -9,7 +9,7 @@
   "description": "Play and chat smarter with BetterChatGPT - an amazing open-source web app with a better UI for exploring OpenAI's ChatGPT API!",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --mode $NODE_ENV",
     "preview": "vite preview",
     "electron": "concurrently -k \"BROWSER=none yarn dev\" \"wait-on tcp:5173 && electron .\"",
     "pack": "yarn build && electron-builder --dir",

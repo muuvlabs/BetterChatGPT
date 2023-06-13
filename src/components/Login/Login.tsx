@@ -8,7 +8,7 @@ const Login = () => {
 
   const handleOnClick = () => {
     setIsLoading(true);
-    defaultApi.pathname = defaultApi.hostname.startsWith('api.')
+    defaultApi.pathname = ( defaultApi.hostname.startsWith('api.') || defaultApi.hostname.match(/localhost/) )
       ? '/login'
       : '/api/login'
     window.location.href = defaultApi.toString();

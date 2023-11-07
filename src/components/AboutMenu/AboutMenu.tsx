@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import PopupModal from '@components/PopupModal';
 import AboutIcon from '@icon/AboutIcon';
-import { version } from '../../../package.json'
+import { version } from '../../../version.json'
 
 const AboutMenu = () => {
   const { t } = useTranslation(['main', 'about']);

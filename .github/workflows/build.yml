@@ -19,6 +19,7 @@ jobs:
         run: yarn install --frozen-lockfile
         env:
           CI: '' # suppress treating warnings as errors for now
+          NODE_ENV: production
       - name: 🩻 Test
         run: echo "🧪 No Tests set" #yarn test
       - name: 🏭 Build Project

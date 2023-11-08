@@ -18,8 +18,8 @@ jobs:
       - name: ♨️ Bump version
         id: bump
         run: |
-          npm version prerelease -m "♨️ %s"
-          VERSION=$(node -p "require('./package.json').version")
+          npm run bump-version
+          VERSION=$(jq -r '.version' version.json)
           echo "::set-output name=HOTFIX::hotfix/$VERSION"
       - name: ♨️ Create hotfix branch
         run: |

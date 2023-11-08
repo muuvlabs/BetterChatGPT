@@ -16,7 +16,7 @@ jobs:
         id: version
         run: |
           git checkout main
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION=$(jq -r '.version' version.json)
           echo "::set-output name=VERSION::$VERSION"
       - name: 📑 Get latest two tags
         id: latest_tags

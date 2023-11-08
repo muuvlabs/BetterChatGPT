@@ -1,5 +1,5 @@
 # Builder stage
-FROM node:alpine AS builder
+FROM node:16.20.2-alpine3.18 AS builder
 
 # Make sure devDependencies are installed (needed for tsc). Don't update/override it.
 ARG NODE_ENV=development
@@ -31,7 +31,7 @@ RUN cp .vi-env.${REAL_ENV} .env.${REAL_ENV} && \
     yarn build --mode $REAL_ENV
 
 # Serve stage
-FROM nginx:alpine
+FROM nginx:1.25.3-alpine3.18-slim
 COPY --from=builder /home/appuser/app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 3000

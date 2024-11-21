@@ -1,21 +1,38 @@
-FROM node:alpine
+# Builder stage
+FROM node:16.20.2-alpine3.18 AS builder
 
+# Make sure devDependencies are installed (needed for tsc). Don't update/override it.
 ARG NODE_ENV=development
 
+# Using REAL_ENV so that it uses the right values for prod/staging. Must be overridden.
+ARG REAL_ENV=development
+
+ENV PATH /home/appuser/.yarn/bin:$PATH
+
+# Create app directory
 RUN addgroup -S appgroup && \
-  adduser -S appuser -G appgroup && \
-  mkdir -p /home/appuser/app && \
-  chown appuser:appgroup /home/appuser/app
+    adduser -S appuser -G appgroup && \
+    mkdir -p /home/appuser/app && \
+    chown appuser:appgroup /home/appuser/app
+
 USER appuser
-
-RUN yarn config set prefix ~/.yarn && \
-  yarn global add serve
-
 WORKDIR /home/appuser/app
-COPY --chown=appuser:appgroup package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-COPY --chown=appuser:appgroup . .
-RUN yarn build
 
+# Install dependencies
+COPY --chown=appuser:appgroup package.json yarn.lock ./
+RUN yarn config set prefix ~/.yarn && \
+    yarn install --frozen-lockfile
+
+# Bundle app source
+COPY --chown=appuser:appgroup . .
+
+# Build static assets
+RUN cp .vi-env.${REAL_ENV} .env.${REAL_ENV} && \
+    yarn build --mode $REAL_ENV
+
+# Serve stage
+FROM nginx:1.25.3-alpine3.18-slim
+COPY --from=builder /home/appuser/app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 3000
-CMD ["/home/appuser/.yarn/bin/serve", "-s", "dist", "-l", "3000"]
+CMD ["nginx", "-g", "daemon off;"]

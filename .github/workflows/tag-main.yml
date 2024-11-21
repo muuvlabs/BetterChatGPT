@@ -20,7 +20,7 @@ jobs:
           git config --global user.name "🤖 workflows[bot]2022"
       - name: 🔖 Tag
         run: |
-          git tag v$(node -p "require('./package.json').version")
+          git tag v$(jq -r '.version' version.json)
           git push --tags
 
   announce-release:

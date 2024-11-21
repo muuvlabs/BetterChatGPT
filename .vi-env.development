@@ -3,6 +3,7 @@
 #VITE_OPENAI_API_KEY=
 #VITE_DEFAULT_SYSTEM_MESSAGE=     # Remove this line if you want to use the default system message of Better ChatGPT
 VITE_GOOGLE_CLIENT_ID=306814313944-ffh717vr992o0543sks40a5091nlugqm.apps.googleusercontent.com
+VITE_DEFAULT_API=http://localhost:3101
 VITE_DEFAULT_API_ENDPOINT=http://localhost:3101/v1/chat/completions
-VITE_DEFAULT_WELCOME_MESSAGE="Welcome to Vi's BetterChatGPT"
+VITE_DEFAULT_WELCOME_MESSAGE="Welcome to Vi's BetterChatGPT (DEV)"
 VITE_DEFAULT_LOGIN_MESSAGE="Log in with your Google account to continue"

@@ -21,8 +21,8 @@ jobs:
       - name: 🔖 Bump version
         id: bump
         run: |
-          npm version prerelease -m "♨️ %s"
-          VERSION=$(node -p "require('./package.json').version")
+          npm run bump-version
+          VERSION=$(jq -r '.version' version.json)
           echo "::set-output name=RELEASE::release/$VERSION"
       - name: 📦 Create release branch
         run: |
